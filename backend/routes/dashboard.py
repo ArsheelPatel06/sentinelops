@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from flask_jwt_extended import jwt_required
-from backend.models import db, Project, Pipeline, Vuln, Container, CloudResource
+from backend.models import db, Project, Pipeline, Vuln
 from sqlalchemy import func
 
 dashboard_bp = Blueprint('dashboard', __name__)

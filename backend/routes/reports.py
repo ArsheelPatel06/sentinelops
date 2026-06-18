@@ -1,6 +1,6 @@
-from flask import Blueprint, jsonify, request, send_from_directory, current_app
+from flask import Blueprint, jsonify, request, send_from_directory
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from backend.models import db, Report, Pipeline, Vuln, User, AuditLog
+from backend.models import db, Report, Pipeline, Vuln, AuditLog
 from backend.services.report_service import ReportService
 import os
 

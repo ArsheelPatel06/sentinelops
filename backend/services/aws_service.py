@@ -1,5 +1,4 @@
 import boto3
-from botocore.exceptions import NoCredentialsError, ClientError
 import logging
 from backend.config import Config
 

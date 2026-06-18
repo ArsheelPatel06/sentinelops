@@ -72,7 +72,6 @@ class GitHubService:
             return self._get_mock_prs(limit)
 
     def _get_mock_commits(self, branch, limit):
-        import time
         from datetime import datetime, timedelta
         
         mocks = [

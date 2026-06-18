@@ -4,7 +4,6 @@ from flask_jwt_extended import (
     jwt_required, get_jwt_identity
 )
 from backend.models import db, User, AuditLog
-from datetime import datetime
 
 auth_bp = Blueprint('auth', __name__)
 
