@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SentinelOps — Enterprise DevSecOps Command Center</title>
+  <meta name="description" content="Unified DevSecOps platform for CI/CD automation, security monitoring, container management, and cloud operations." />
+  <meta name="keywords" content="DevSecOps, CI/CD, Security, Cloud, Containers, Pipeline" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- LANDING PAGE -->
+<div id="landing-page" class="landing-page">
+  <nav class="landing-nav">
+    <div class="landing-nav-brand">
+      <div class="brand-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+      </div>
+      <span class="brand-name">SentinelOps</span>
+    </div>
+    <div class="landing-nav-links">
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#docs">Docs</a>
+    </div>
+    <div class="landing-nav-actions">
+      <button class="btn-ghost" data-action="go-to-app">Sign In</button>
+      <button class="btn-primary" data-action="go-to-app">Get Started</button>
+    </div>
+  </nav>
+
+  <section class="hero-section">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Enterprise DevSecOps Platform · v4.2.1 GA
+    </div>
+    <h1 class="hero-headline">
+      Secure. <span class="gradient-text">Automate.</span> Deploy.
+    </h1>
+    <p class="hero-subheadline">
+      Unified DevSecOps Command Center for CI/CD pipelines, security monitoring,
+      container management, and cloud operations — all in one place.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-hero-primary" id="launch-dashboard" data-action="go-to-app">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        Launch Dashboard
+      </button>
+      <button class="btn-hero-secondary" id="view-pipeline" onclick="launchAppPipelines()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+        View Pipeline Status
+      </button>
+    </div>
+
+    <div class="metrics-banner">
+      <div class="metric-item">
+        <span class="metric-value" data-target="125" data-suffix="">125</span>
+        <span class="metric-label">Deployments Today</span>
+      </div>
+      <div class="metric-divider"></div>
+      <div class="metric-item">
+        <span class="metric-value" data-target="98.7" data-suffix="%" data-decimal="1">98.7%</span>
+        <span class="metric-label">Success Rate</span>
+      </div>
+      <div class="metric-divider"></div>
+      <div class="metric-item">
+        <span class="metric-value" data-target="42" data-suffix="">42</span>
+        <span class="metric-label">Active Projects</span>
+      </div>
+      <div class="metric-divider"></div>
+      <div class="metric-item">
+        <span class="metric-value" data-target="12" data-suffix="">12</span>
+        <span class="metric-label">Critical Vulnerabilities</span>
+      </div>
+    </div>
+
+    <!-- Architecture Diagram -->
+    <div class="arch-diagram">
+      <div class="arch-title">CI/CD Pipeline Architecture</div>
+      <div class="arch-flow">
+        <div class="arch-node" data-delay="0">
+          <div class="arch-node-icon github">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          </div>
+          <span>GitHub</span>
+        </div>
+        <div class="arch-connector"><div class="arch-line"></div></div>
+        <div class="arch-node" data-delay="200">
+          <div class="arch-node-icon jenkins">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+          </div>
+          <span>Jenkins</span>
+        </div>
+        <div class="arch-connector"><div class="arch-line"></div></div>
+        <div class="arch-node" data-delay="400">
+          <div class="arch-node-icon sonar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9S3 16.97 3 12 7.03 3 12 3s9 4.03 9 9z"/></svg>
+          </div>
+          <span>SonarQube</span>
+        </div>
+        <div class="arch-connector"><div class="arch-line"></div></div>
+        <div class="arch-node" data-delay="600">
+          <div class="arch-node-icon trivy">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <span>Trivy</span>
+        </div>
+        <div class="arch-connector"><div class="arch-line"></div></div>
+        <div class="arch-node" data-delay="800">
+          <div class="arch-node-icon docker">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="9" width="3" height="3"/><rect x="6" y="9" width="3" height="3"/><rect x="10" y="9" width="3" height="3"/><rect x="6" y="5" width="3" height="3"/><rect x="10" y="5" width="3" height="3"/><path d="M22 11s-1-1-5-1c-.5-3-3-4-3-4H2s-1 6 4 8h14c2 0 2-3 2-3z"/></svg>
+          </div>
+          <span>Docker</span>
+        </div>
+        <div class="arch-connector"><div class="arch-line"></div></div>
+        <div class="arch-node" data-delay="1000">
+          <div class="arch-node-icon aws">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.418 3.623l-.018-.002a6.713 6.713 0 0 0-1.4-.096A7 7 0 0 0 5.006 8l-.037.12A7 7 0 0 0 7 21h11a5 5 0 0 0 4.9-5.9c-.252-1.89-1.7-3.482-3.482-3.482z"/></svg>
+          </div>
+          <span>AWS Deploy</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features-section" id="features">
+    <div class="section-header">
+      <span class="section-tag">Platform Capabilities</span>
+      <h2>Everything your DevSecOps team needs</h2>
+      <p>From code commit to cloud deployment, SentinelOps covers the entire software delivery lifecycle with enterprise-grade security built in.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon ci">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+        </div>
+        <h3>CI/CD Automation</h3>
+        <p>Orchestrate complex multi-stage pipelines with parallel execution, artifact caching, and zero-downtime deployments.</p>
+        <div class="feature-tags"><span>Jenkins</span><span>GitOps</span><span>ArgoCD</span></div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon sec">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Security Scanning</h3>
+        <p>Shift-left security with SAST, DAST, dependency scanning, secrets detection, and container image vulnerability analysis.</p>
+        <div class="feature-tags"><span>OWASP</span><span>Trivy</span><span>Snyk</span></div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon cloud">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg>
+        </div>
+        <h3>Cloud Monitoring</h3>
+        <p>Real-time visibility into EC2, RDS, S3, and network resources with anomaly detection and cost optimization insights.</p>
+        <div class="feature-tags"><span>AWS</span><span>GCP</span><span>Azure</span></div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon comp">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+        </div>
+        <h3>Compliance Reporting</h3>
+        <p>Automated compliance checks for SOC2, ISO 27001, PCI-DSS, HIPAA with audit-ready evidence collection.</p>
+        <div class="feature-tags"><span>SOC2</span><span>ISO 27001</span><span>PCI-DSS</span></div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon cont">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="9" width="3" height="3"/><rect x="6" y="9" width="3" height="3"/><rect x="10" y="9" width="3" height="3"/><rect x="10" y="5" width="3" height="3"/><rect x="6" y="5" width="3" height="3"/><path d="M22 11s-1-1-5-1c-.5-3-3-4-3-4H2s-1 6 4 8h14c2 0 2-3 2-3z"/></svg>
+        </div>
+        <h3>Container Management</h3>
+        <p>Manage Docker registries, scan images, monitor running containers and orchestrate Kubernetes workloads at scale.</p>
+        <div class="feature-tags"><span>Docker</span><span>K8s</span><span>ECR</span></div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon rbac">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Role-Based Access</h3>
+        <p>Granular RBAC with SSO integration, audit logging, IP allowlisting, and MFA enforcement for enterprise security.</p>
+        <div class="feature-tags"><span>SSO</span><span>SAML</span><span>OIDC</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="pricing-section" id="pricing">
+    <div class="section-header">
+      <span class="section-tag">Pricing</span>
+      <h2>Infrastructure Cost Estimates</h2>
+      <p>Transparent AWS pricing for your DevSecOps Pipeline Cloud deployment.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-tier">Starter</div>
+        <div class="pricing-price">$247<span>/mo</span></div>
+        <div class="pricing-desc">For small teams getting started with DevSecOps</div>
+        <ul class="pricing-features">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>1x EC2 t3.medium</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>RDS db.t3.micro (20GB)</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>S3 Standard (500GB)</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>CloudWatch Basic</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Single Region</li>
+        </ul>
+        <button class="btn-pricing-outline" data-action="go-to-app">Get Started</button>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Most Popular</div>
+        <div class="pricing-tier">Professional</div>
+        <div class="pricing-price">$892<span>/mo</span></div>
+        <div class="pricing-desc">For growing engineering teams at scale</div>
+        <ul class="pricing-features">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>3x EC2 t3.large (HA)</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>RDS db.t3.medium (100GB)</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>S3 + CloudFront (2TB)</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>ALB + Auto Scaling</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>CloudWatch + SNS Alerts</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Multi-AZ Deployment</li>
+        </ul>
+        <button class="btn-pricing-primary" data-action="go-to-app">Launch Dashboard</button>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-tier">Enterprise</div>
+        <div class="pricing-price">$3,840<span>/mo</span></div>
+        <div class="pricing-desc">For large organizations with multi-region needs</div>
+        <ul class="pricing-features">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>EKS Cluster (10 nodes)</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>RDS Multi-AZ (500GB)</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>S3 + Glacier (10TB)</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>WAF + Shield + GuardDuty</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Multi-Region (3 regions)</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>99.99% SLA</li>
+        </ul>
+        <button class="btn-pricing-outline" data-action="go-to-app">Contact Sales</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="landing-footer">
+    <div class="footer-brand">
+      <div class="brand-icon small">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <span>SentinelOps</span>
+    </div>
+    <p>© 2025 SentinelOps — Enterprise DevSecOps Command Center. AWS Case Study Project.</p>
+  </footer>
+</div>
+
+<!-- APP SHELL -->
+<div id="app-shell" class="app-shell hidden">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <span class="brand-name">SentinelOps</span>
+      </div>
+      <button class="sidebar-collapse-btn" id="sidebar-toggle" title="Toggle Sidebar">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="sidebar-section-label">Main</div>
+    <nav class="sidebar-nav">
+      <a href="#dashboard" class="nav-item" data-page="dashboard">
+        <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span class="nav-label">Dashboard</span>
+      </a>
+      <a href="#projects" class="nav-item" data-page="projects">
+        <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        <span class="nav-label">Projects</span>
+        <span class="nav-badge">0</span>
+      </a>
+      <a href="#pipelines" class="nav-item" data-page="pipelines">
+        <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span class="nav-label">Pipelines</span>
+        <span class="nav-badge running">0</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-section-label">Security & Infra</div>
+    <nav class="sidebar-nav">
+      <a href="#security" class="nav-item" data-page="security">
+        <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span class="nav-label">Security Center</span>
+        <span class="nav-badge danger">0</span>
+      </a>
+      <a href="#containers" class="nav-item" data-page="containers">
+        <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="9" width="3" height="3"/><rect x="6" y="9" width="3" height="3"/><rect x="10" y="9" width="3" height="3"/><rect x="10" y="5" width="3" height="3"/><rect x="6" y="5" width="3" height="3"/><path d="M22 11s-1-1-5-1c-.5-3-3-4-3-4H2s-1 6 4 8h14c2 0 2-3 2-3z"/></svg>
+        <span class="nav-label">Containers</span>
+      </a>
+      <a href="#cloud" class="nav-item" data-page="cloud">
+        <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg>
+        <span class="nav-label">Cloud Resources</span>
+      </a>
+      <a href="#monitoring" class="nav-item" data-page="monitoring">
+        <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        <span class="nav-label">Monitoring</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-section-label">Work</div>
+    <nav class="sidebar-nav">
+      <a href="#tasks" class="nav-item" data-page="tasks">
+        <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <span class="nav-label">Tasks</span>
+        <span class="nav-badge">0</span>
+      </a>
+      <a href="#reports" class="nav-item" data-page="reports">
+        <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <span class="nav-label">Reports</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-section-label">Admin</div>
+    <nav class="sidebar-nav">
+      <a href="#team" class="nav-item" data-page="team">
+        <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span class="nav-label">Team</span>
+      </a>
+      <a href="#settings" class="nav-item" data-page="settings">
+        <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 0 0 4.93 19.07M4.93 4.93A10 10 0 0 1 19.07 19.07"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
+        <span class="nav-label">Settings</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-status">
+        <div class="status-dot success"></div>
+        <span>All systems operational</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="btn-icon" id="mobile-menu-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="topbar-search" id="global-search-trigger">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span>Search everything...</span>
+          <kbd>⌘K</kbd>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="env-badge">
+          <span class="env-dot"></span>
+          Production
+        </div>
+        <button class="btn-icon" id="notif-btn" title="Notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="notif-dot"></span>
+        </button>
+        <button class="btn-icon" id="theme-toggle" title="Toggle Theme">
+          <svg id="theme-icon-dark" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg id="theme-icon-light" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <div class="user-menu" id="user-menu" data-action="navigate" data-page="profile">
+          <div class="user-avatar">AK</div>
+          <div class="user-info">
+            <span class="user-name">Arsheelpatel</span>
+            <span class="user-role">Admin</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- PAGE CONTENT -->
+    <main id="page-content" class="page-content">
+      <!-- Views injected here by app.js -->
+    </main>
+  </div>
+</div>
+
+<!-- COMMAND PALETTE -->
+<div id="command-palette" class="command-palette hidden" role="dialog" aria-modal="true" aria-label="Command palette">
+  <div class="cp-backdrop" id="cp-backdrop"></div>
+  <div class="cp-modal">
+    <div class="cp-search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="cp-input" placeholder="Search pages, actions, shortcuts..." autocomplete="off" spellcheck="false" />
+      <kbd>ESC</kbd>
+    </div>
+    <div class="cp-results" id="cp-results"></div>
+    <div class="cp-footer">
+      <span><kbd>↑↓</kbd> Navigate</span>
+      <span><kbd>↵</kbd> Select</span>
+      <span><kbd>ESC</kbd> Close</span>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+<!-- NOTIFICATION PANEL -->
+<div id="notif-panel" class="notif-panel hidden">
+  <div class="notif-panel-header">
+    <span>Notifications</span>
+    <button onclick="markAllRead()">Mark all read</button>
+  </div>
+  <div id="notif-list" class="notif-list"></div>
+</div>
+
+<!-- MODAL ROOT -->
+<div id="modal-root" class="hidden" aria-modal="true" role="dialog" aria-labelledby="modal-title"></div>
+
+<!-- DRAWER ROOT -->
+<div id="drawer-root" class="hidden"></div>
+
+<!-- CONFIRM DIALOG -->
+<div id="confirm-root" class="hidden" aria-modal="true" role="alertdialog"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
