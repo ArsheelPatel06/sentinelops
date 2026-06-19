@@ -1,0 +1,166 @@
+// DBML (Database Markup Language) Schema Definition for SentinelOps
+// Paste this code into https://dbdiagram.io/d to generate the database schema diagram.
+
+Table users {
+  id int [pk, increment]
+  username varchar(50) [unique, not null]
+  email varchar(100) [unique, not null]
+  password_hash varchar(255) [not null]
+  role varchar(50) [not null, default: 'Viewer']
+  initials varchar(10)
+  joined_at timestamp [default: `CURRENT_TIMESTAMP`]
+  status varchar(20) [default: 'active']
+  mfa_enabled tinyint(1) [default: 0]
+  ssh_key text
+  api_token varchar(255) [unique]
+  created_at timestamp [default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [default: `CURRENT_TIMESTAMP`]
+}
+
+Table projects {
+  id varchar(50) [pk]
+  name varchar(100) [unique, not null]
+  repo varchar(150) [not null]
+  desc text
+  envs varchar(255) [not null, default: 'dev']
+  owner_id int
+  language varchar(50)
+  branch varchar(50) [default: 'main']
+  status varchar(50) [default: 'healthy']
+  deploys int [default: 0]
+  successRate decimal(5,2) [default: 100.00]
+  lastDeploy bigint
+  createdAt bigint
+}
+
+Table pipelines {
+  id varchar(50) [pk]
+  name varchar(100) [not null]
+  project_id varchar(50) [not null]
+  branch varchar(50) [default: 'main']
+  trigger varchar(50) [default: 'push']
+  status varchar(50) [default: 'pending']
+  number varchar(50)
+  commit varchar(50)
+  author varchar(100)
+  startTime bigint
+  duration varchar(50)
+}
+
+Table pipeline_stages {
+  id int [pk, increment]
+  pipeline_id varchar(50) [not null]
+  stage_name varchar(50) [not null]
+  status varchar(50) [default: 'pending']
+  duration varchar(50)
+  sort_order int [not null]
+}
+
+Table vulns {
+  id varchar(50) [pk]
+  title varchar(255) [not null]
+  severity varchar(50) [not null]
+  cve varchar(50) [not null]
+  project_id varchar(50) [not null]
+  component varchar(100)
+  status varchar(50) [default: 'open']
+  assignee_id int
+  detectedAt bigint
+}
+
+Table containers {
+  id varchar(50) [pk]
+  name varchar(100) [not null]
+  image varchar(255) [not null]
+  status varchar(50) [default: 'stopped']
+  cpu varchar(50) [default: '0%']
+  memory varchar(50) [default: '0MB']
+  ports varchar(100)
+  created_at bigint
+}
+
+Table cloud_resources {
+  id varchar(100) [pk]
+  name varchar(100) [not null]
+  type varchar(50) [not null]
+  status varchar(50) [not null]
+  region varchar(50) [not null]
+  metadata text
+  launch_time varchar(100)
+}
+
+Table tasks {
+  id varchar(50) [pk]
+  title varchar(255) [not null]
+  desc text
+  priority varchar(50) [default: 'p4']
+  project_id varchar(50)
+  assignee_id int
+  tags varchar(255)
+  column_name varchar(50) [default: 'backlog']
+  due bigint
+  createdAt bigint
+}
+
+Table reports {
+  id int [pk, increment]
+  title varchar(100) [not null]
+  type varchar(50) [not null]
+  file_path varchar(255) [not null]
+  generated_by int
+  generated_at timestamp [default: `CURRENT_TIMESTAMP`]
+}
+
+Table notifications {
+  id int [pk, increment]
+  user_id int
+  unread tinyint(1) [default: 1]
+  icon varchar(10)
+  cls varchar(50) [default: 'neutral']
+  text text [not null]
+  time bigint [not null]
+}
+
+Table audit_logs {
+  id int [pk, increment]
+  user_id int
+  action varchar(100) [not null]
+  details text
+  ip_address varchar(45)
+  timestamp timestamp [default: `CURRENT_TIMESTAMP`]
+}
+
+Table settings {
+  id int [pk, default: 1]
+  app_name varchar(100) [default: 'SentinelOps']
+  app_domain varchar(100) [default: 'sentinelops.io']
+  app_timezone varchar(50) [default: 'Asia/Kolkata']
+  app_defaultEnv varchar(50) [default: 'production']
+  smtp_host varchar(100) [default: 'smtp.gmail.com']
+  smtp_port int [default: 587]
+  smtp_user varchar(100) [default: 'ops@sentinelops.io']
+  smtp_from varchar(100) [default: 'SentinelOps <ops@sentinelops.io>']
+  smtp_tls tinyint(1) [default: 1]
+  db_host varchar(255) [default: 'localhost']
+  db_port int [default: 3306]
+  db_name varchar(100) [default: 'sentinelops_db']
+  db_user varchar(100) [default: 'root']
+  db_pool int [default: 20]
+  security_mfa tinyint(1) [default: 1]
+  security_ssoEnabled tinyint(1) [default: 0]
+  security_sessionTimeout int [default: 480]
+  security_ipWhitelist tinyint(1) [default: 0]
+  security_auditLog tinyint(1) [default: 1]
+}
+
+// Relationships & Foreign Keys
+Ref: projects.owner_id > users.id [delete: set null]
+Ref: pipelines.project_id > projects.id [delete: cascade]
+Ref: pipeline_stages.pipeline_id > pipelines.id [delete: cascade]
+Ref: vulns.project_id > projects.id [delete: cascade]
+Ref: vulns.assignee_id > users.id [delete: set null]
+Ref: tasks.project_id > projects.id [delete: set null]
+Ref: tasks.assignee_id > users.id [delete: set null]
+Ref: reports.generated_by > users.id [delete: set null]
+Ref: notifications.user_id > users.id [delete: cascade]
+Ref: audit_logs.user_id > users.id [delete: set null]
