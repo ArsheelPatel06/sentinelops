@@ -42,14 +42,18 @@ class User(db.Model):
         return {
             'id': self.id,
             'username': self.username,
+            'name': self.username,  # Map name to username for frontend
             'email': self.email,
             'role': self.role,
             'initials': self.initials,
             'joined_at': self.joined_at.isoformat() if self.joined_at else None,
+            'joined': self.joined_at.strftime('%b %Y') if self.joined_at else 'Jun 2026',  # Map joined to readable format
             'status': self.status,
             'mfa_enabled': bool(self.mfa_enabled),
             'ssh_key': self.ssh_key,
-            'api_token': self.api_token
+            'api_token': self.api_token,
+            'dept': 'Platform Engineering',  # Fallback department
+            'avatar': f'bg{(self.id % 6) + 1 if self.id else 1}'  # Fallback color avatar
         }
 
 

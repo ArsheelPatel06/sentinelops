@@ -51,9 +51,6 @@ security_center_bp = Blueprint('security_center', __name__)
 def get_security_summary():
     try:
         vulns = Vuln.query.all()
-        if not vulns:
-            raise Exception("No vulnerability data available in database.")
-            
         open_vulns = [v for v in vulns if v.status != 'fixed']
         
         critical_count = sum(1 for v in open_vulns if v.severity == 'critical')

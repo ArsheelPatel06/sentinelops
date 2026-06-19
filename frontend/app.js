@@ -311,7 +311,7 @@ const AppState = {
     }
   },
   updateTeamMember(id, upd) {
-    const i=this.team.findIndex(m=>m.id===id);
+    const i=this.team.findIndex(m=>m.id==id);
     if(i>-1) {
       Object.assign(this.team[i],upd);
       updateSidebarBadges();
@@ -325,7 +325,7 @@ const AppState = {
     }
   },
   removeTeamMember(id) {
-    this.team=this.team.filter(m=>m.id!==id);
+    this.team=this.team.filter(m=>m.id!=id);
     updateSidebarBadges();
     if (this.backendActive) {
       authFetch(`${this.apiUrl}/api/team/${id}`, {
@@ -334,7 +334,7 @@ const AppState = {
     }
   },
   updateVuln(id, upd) {
-    const i=this.vulns.findIndex(v=>v.id===id);
+    const i=this.vulns.findIndex(v=>v.id==id);
     if(i>-1) {
       Object.assign(this.vulns[i],upd);
       updateSidebarBadges();
