@@ -1,5 +1,4 @@
-/images
-/frontend/images
+
 # Secrets & Credentials
 .env
 .env.*
