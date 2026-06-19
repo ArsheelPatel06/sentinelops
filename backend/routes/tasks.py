@@ -21,8 +21,8 @@ def create_task():
     title = data.get('title')
     desc = data.get('desc', '')
     priority = data.get('priority', 'p4')
-    project_id = data.get('project_id')
-    assignee_id = data.get('assignee_id')
+    project_id = data.get('project_id') or data.get('project')
+    assignee_id = data.get('assignee_id') or data.get('assignee')
     tags_data = data.get('tags', '')
     if isinstance(tags_data, list):
         tags = ','.join(tags_data)
@@ -84,10 +84,12 @@ def update_task(task_id):
         task.priority = data['priority']
     if 'column_name' in data:
         task.column_name = data['column_name']
-    if 'assignee_id' in data:
-        task.assignee_id = int(data['assignee_id']) if data['assignee_id'] else None
-    if 'project_id' in data:
-        task.project_id = data['project_id'] if data['project_id'] else None
+    if 'assignee_id' in data or 'assignee' in data:
+        val = data.get('assignee_id') or data.get('assignee')
+        task.assignee_id = int(val) if val else None
+    if 'project_id' in data or 'project' in data:
+        val = data.get('project_id') or data.get('project')
+        task.project_id = val if val else None
     if 'tags' in data:
         tags_data = data['tags']
         if isinstance(tags_data, list):

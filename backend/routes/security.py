@@ -22,8 +22,9 @@ def update_vulnerability(vuln_id):
     
     if 'status' in data:
         vuln.status = data['status']
-    if 'assignee_id' in data:
-        vuln.assignee_id = data['assignee_id'] if data['assignee_id'] else None
+    if 'assignee_id' in data or 'assignee' in data:
+        val = data.get('assignee_id') or data.get('assignee')
+        vuln.assignee_id = int(val) if val else None
 
     # Audit log
     audit = AuditLog(

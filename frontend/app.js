@@ -405,8 +405,8 @@ function fmtDuration(ms) {
 function clamp(v,min,max){ return Math.max(min,Math.min(max,v)); }
 function lerp(a,b,t){ return a+(b-a)*t; }
 function randBetween(a,b){ return Math.floor(Math.random()*(b-a+1))+a; }
-function getMember(id) { return AppState.team.find(m=>m.id===id)||null; }
-function getProject(id) { return AppState.projects.find(p=>p.id===id)||null; }
+function getMember(id) { return AppState.team.find(m=>m.id==id)||null; }
+function getProject(id) { return AppState.projects.find(p=>p.id==id)||null; }
 function avatarBg(cls) {
   const map={bg1:'linear-gradient(135deg,#4F46E5,#818CF8)',bg2:'linear-gradient(135deg,#10B981,#34d399)',bg3:'linear-gradient(135deg,#F59E0B,#fbbf24)',bg4:'linear-gradient(135deg,#EF4444,#f87171)',bg5:'linear-gradient(135deg,#38BDF8,#7dd3fc)',bg6:'linear-gradient(135deg,#A78BFA,#c4b5fd)'};
   return map[cls]||'linear-gradient(135deg,#4F46E5,#818CF8)';
@@ -845,7 +845,7 @@ function renderProjectTable(projects) {
 }
 
 function projectFormHTML(p={}) {
-  const memberOpts=AppState.team.map(m=>`<option value="${m.id}" ${p.owner===m.id?'selected':''}>${m.name}</option>`).join('');
+  const memberOpts=AppState.team.map(m=>`<option value="${m.id}" ${p.owner==m.id?'selected':''}>${m.name}</option>`).join('');
   return `
   <div class="form-grid-2">
     <div class="form-group"><label class="form-label">Project Name <span class="req">*</span></label><input class="form-input" id="pf-name" placeholder="my-service-api" value="${escHtml(p.name||'')}"><div class="form-error">Name is required</div></div>
@@ -1182,7 +1182,7 @@ function runSecurityScan() {
 
 function viewVulnDetails(id) {
   const v=AppState.vulns.find(x=>x.id===id); if(!v) return;
-  const memberOpts=AppState.team.map(m=>`<option value="${m.id}" ${v.assignee===m.id?'selected':''}>${m.name}</option>`).join('');
+  const memberOpts=AppState.team.map(m=>`<option value="${m.id}" ${v.assignee==m.id?'selected':''}>${m.name}</option>`).join('');
   showModal({ title:v.cve, subtitle:`${v.package} · CVSS ${v.cvss}`, size:'wide', onSave:false,
     body:`
     <div class="form-grid-2" style="margin-bottom:16px">
@@ -1558,7 +1558,7 @@ function renderTasks() {
 function renderKanbanColumn(col, title, color, priority, assignee) {
   let tasks=AppState.tasks[col];
   if(priority!=='all') tasks=tasks.filter(t=>t.priority===priority);
-  if(assignee!=='all') tasks=tasks.filter(t=>t.assignee===assignee);
+  if(assignee!=='all') tasks=tasks.filter(t=>t.assignee==assignee);
   return `<div class="kanban-col">
     <div class="kanban-col-header">
       <div class="kanban-col-title"><div class="kanban-col-indicator" style="background:${color}"></div>${title}</div>
@@ -1614,8 +1614,8 @@ function initKanbanDnd() {
 }
 
 function taskFormHTML(t={}) {
-  const projOpts=`<option value="">No project</option>${AppState.projects.map(p=>`<option value="${p.id}" ${t.project===p.id?'selected':''}>${p.name}</option>`).join('')}`;
-  const memberOpts=`<option value="">Unassigned</option>${AppState.team.map(m=>`<option value="${m.id}" ${t.assignee===m.id?'selected':''}>${m.name}</option>`).join('')}`;
+  const projOpts=`<option value="">No project</option>${AppState.projects.map(p=>`<option value="${p.id}" ${t.project==p.id?'selected':''}>${p.name}</option>`).join('')}`;
+  const memberOpts=`<option value="">Unassigned</option>${AppState.team.map(m=>`<option value="${m.id}" ${t.assignee==m.id?'selected':''}>${m.name}</option>`).join('')}`;
   const dueVal=t.due?new Date(t.due).toISOString().split('T')[0]:'';
   return `
   <div class="form-group"><label class="form-label">Title <span class="req">*</span></label><input class="form-input" id="tf-title" placeholder="Task title" value="${escHtml(t.title||'')}"><div class="form-error">Title is required</div></div>
@@ -2181,7 +2181,11 @@ function showLoginModal() {
 }
 
 async function initBackendConnection() {
-  AppState.apiUrl = (window.location.protocol === 'file:' || (window.location.port !== '' && window.location.port !== '80' && window.location.port !== '443')) ? 'http://localhost:5001' : '';
+  AppState.apiUrl = (window.location.protocol === 'file:')
+    ? 'http://localhost:5001'
+    : (window.location.port === '' || window.location.port === '80' || window.location.port === '443')
+      ? ''
+      : `${window.location.protocol}//${window.location.hostname}:5001`;
   
   try {
     const res = await fetch(`${AppState.apiUrl}/api/health`);

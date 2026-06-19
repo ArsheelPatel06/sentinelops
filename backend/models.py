@@ -188,6 +188,7 @@ class Vuln(db.Model):
             'component': self.component,
             'status': self.status,
             'assignee_id': self.assignee_id,
+            'assignee': self.assignee_id,
             'detectedAt': self.detectedAt
         }
 
@@ -282,7 +283,9 @@ class Task(db.Model):
             'desc': self.desc,
             'priority': self.priority,
             'project_id': self.project_id,
+            'project': self.project_id,
             'assignee_id': self.assignee_id,
+            'assignee': self.assignee_id,
             'tags': tags_list,
             'column_name': self.column_name,
             'due': self.due,
