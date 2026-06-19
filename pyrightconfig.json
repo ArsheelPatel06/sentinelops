@@ -1,0 +1,9 @@
+{
+  "exclude": [
+    "**/.venv",
+    "**/venv",
+    "**/__pycache__"
+  ],
+  "reportCallIssue": false,
+  "reportGeneralTypeIssues": false
+}

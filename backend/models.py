@@ -5,6 +5,9 @@ import json
 db = SQLAlchemy()
 
 class User(db.Model):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     __tablename__ = 'users'
     
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -51,6 +54,9 @@ class User(db.Model):
 
 
 class Project(db.Model):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     __tablename__ = 'projects'
     
     id = db.Column(db.String(50), primary_key=True)
@@ -91,6 +97,9 @@ class Project(db.Model):
 
 
 class Pipeline(db.Model):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     __tablename__ = 'pipelines'
     
     id = db.Column(db.String(50), primary_key=True)
@@ -126,6 +135,9 @@ class Pipeline(db.Model):
 
 
 class PipelineStage(db.Model):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     __tablename__ = 'pipeline_stages'
     
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -151,6 +163,9 @@ class PipelineStage(db.Model):
 
 
 class Vuln(db.Model):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     __tablename__ = 'vulns'
     
     id = db.Column(db.String(50), primary_key=True)
@@ -178,6 +193,9 @@ class Vuln(db.Model):
 
 
 class Container(db.Model):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     __tablename__ = 'containers'
     
     id = db.Column(db.String(50), primary_key=True)
@@ -203,6 +221,9 @@ class Container(db.Model):
 
 
 class CloudResource(db.Model):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     __tablename__ = 'cloud_resources'
     
     id = db.Column(db.String(100), primary_key=True)
@@ -232,6 +253,9 @@ class CloudResource(db.Model):
 
 
 class Task(db.Model):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     __tablename__ = 'tasks'
     
     id = db.Column(db.String(50), primary_key=True)
@@ -261,6 +285,9 @@ class Task(db.Model):
 
 
 class Report(db.Model):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     __tablename__ = 'reports'
     
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -282,6 +309,9 @@ class Report(db.Model):
 
 
 class Notification(db.Model):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     __tablename__ = 'notifications'
     
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -305,6 +335,9 @@ class Notification(db.Model):
 
 
 class AuditLog(db.Model):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     __tablename__ = 'audit_logs'
     
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -326,6 +359,9 @@ class AuditLog(db.Model):
 
 
 class Settings(db.Model):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     __tablename__ = 'settings'
     
     id = db.Column(db.Integer, primary_key=True, default=1)
