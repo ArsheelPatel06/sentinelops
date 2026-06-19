@@ -1082,17 +1082,38 @@ function generateFakeLogs(pl) {
 function renderSecurity() {
   const content=document.getElementById('page-content');
   const {search,severity,status}=AppState.filters.security;
-  let vulns=AppState.vulns.filter(v=>{
-    if(search && !v.cve.toLowerCase().includes(search.toLowerCase()) && !v.package.toLowerCase().includes(search.toLowerCase()) && !v.affected.toLowerCase().includes(search.toLowerCase())) return false;
+
+  // Normalize vulnerabilities to prevent crashes from missing fields in DB mode
+  const cvss_map = { critical: 9.8, high: 8.5, medium: 5.5, low: 2.5 };
+  const normalizedVulns = AppState.vulns.map(v => ({
+    ...v,
+    package: v.package || v.component || 'unknown',
+    affected: v.affected || v.component || 'unknown',
+    cvss: (v.cvss !== undefined && v.cvss !== null) ? parseFloat(v.cvss) : (cvss_map[(v.severity || 'medium').toLowerCase()] || 5.0),
+    desc: v.desc || `${v.title || 'Vulnerability detected.'} CVE: ${v.cve || 'N/A'}.`,
+    remediation: v.remediation || `Upgrade component ${v.component || 'package'} to the latest secure version.`
+  }));
+
+  let vulns = normalizedVulns.filter(v => {
+    const cveStr = v.cve || '';
+    const pkgStr = v.package || '';
+    const affStr = v.affected || '';
+    if (search && 
+        !cveStr.toLowerCase().includes(search.toLowerCase()) && 
+        !pkgStr.toLowerCase().includes(search.toLowerCase()) && 
+        !affStr.toLowerCase().includes(search.toLowerCase())) {
+      return false;
+    }
     if(severity!=='all' && v.severity!==severity) return false;
     if(status!=='all' && v.status!==status) return false;
     return true;
   });
-  const openV=AppState.vulns.filter(v=>v.status!=='fixed');
-  const critical=openV.filter(v=>v.severity==='critical').length;
-  const high=openV.filter(v=>v.severity==='high').length;
-  const medium=openV.filter(v=>v.severity==='medium').length;
-  const riskScore=Math.round(Math.min(100,(critical*25+high*10+medium*4)));
+
+  const openV = normalizedVulns.filter(v => v.status !== 'fixed');
+  const critical = openV.filter(v => v.severity === 'critical').length;
+  const high = openV.filter(v => v.severity === 'high').length;
+  const medium = openV.filter(v => v.severity === 'medium').length;
+  const riskScore = Math.round(Math.min(100, (critical * 25 + high * 10 + medium * 4)));
 
   content.innerHTML=`
   <div class="page-header">
@@ -1181,8 +1202,17 @@ function runSecurityScan() {
 }
 
 function viewVulnDetails(id) {
-  const v=AppState.vulns.find(x=>x.id===id); if(!v) return;
-  const memberOpts=AppState.team.map(m=>`<option value="${m.id}" ${v.assignee==m.id?'selected':''}>${m.name}</option>`).join('');
+  const rawV = AppState.vulns.find(x => x.id == id); if (!rawV) return;
+  const cvss_map = { critical: 9.8, high: 8.5, medium: 5.5, low: 2.5 };
+  const v = {
+    ...rawV,
+    package: rawV.package || rawV.component || 'unknown',
+    affected: rawV.affected || rawV.component || 'unknown',
+    cvss: (rawV.cvss !== undefined && rawV.cvss !== null) ? parseFloat(rawV.cvss) : (cvss_map[(rawV.severity || 'medium').toLowerCase()] || 5.0),
+    desc: rawV.desc || `${rawV.title || 'Vulnerability detected.'} CVE: ${rawV.cve || 'N/A'}.`,
+    remediation: rawV.remediation || `Upgrade component ${rawV.component || 'package'} to the latest secure version.`
+  };
+  const memberOpts = AppState.team.map(m => `<option value="${m.id}" ${v.assignee == m.id ? 'selected' : ''}>${m.name}</option>`).join('');
   showModal({ title:v.cve, subtitle:`${v.package} · CVSS ${v.cvss}`, size:'wide', onSave:false,
     body:`
     <div class="form-grid-2" style="margin-bottom:16px">
@@ -1195,8 +1225,8 @@ function viewVulnDetails(id) {
     <div class="form-group"><label class="form-label">Remediation</label><div style="padding:10px;background:var(--success-bg);border:1px solid rgba(16,185,129,0.2);border-radius:var(--radius);font-size:0.875rem;color:var(--success)">${escHtml(v.remediation)}</div></div>
     <div class="form-group"><label class="form-label">Assign To</label><select class="form-select" id="vuln-assign-sel"><option value="">Unassigned</option>${memberOpts}</select></div>
     <div style="display:flex;gap:8px;margin-top:4px">
-      ${v.status!=='fixed'?`<button class="btn-success btn-sm" data-action="security:fix" data-id="${id}">Mark as Fixed</button>`:''}
-      ${v.status==='open'?`<button class="btn-primary btn-sm" data-action="security:in-progress" data-id="${id}">Mark In Progress</button>`:''}
+      ${v.status!=='fixed'?'<button class="btn-success btn-sm" data-action="security:fix" data-id="' + id + '">Mark as Fixed</button>':''}
+      ${v.status==='open'?'<button class="btn-primary btn-sm" data-action="security:in-progress" data-id="' + id + '">Mark In Progress</button>':''}
       <button class="btn-secondary btn-sm" onclick="const sel=document.getElementById('vuln-assign-sel');if(!sel.value)return;AppState.updateVuln('${id}',{assignee:sel.value});window.hideModal();window.renderSecurity();window.toast('success','Assigned','Vulnerability assigned successfully')">Save Assignee</button>
     </div>`,
     cancelLabel:'Close',
