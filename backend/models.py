@@ -183,6 +183,10 @@ class Vuln(db.Model):
     detectedAt = db.Column(db.BigInteger)
 
     def to_dict(self):
+        cvss_map = {'critical': 9.8, 'high': 8.5, 'medium': 5.5, 'low': 2.5}
+        severity_lower = self.severity.lower() if self.severity else 'medium'
+        cvss = cvss_map.get(severity_lower, 5.0)
+        
         return {
             'id': self.id,
             'title': self.title,
@@ -190,10 +194,15 @@ class Vuln(db.Model):
             'cve': self.cve,
             'project_id': self.project_id,
             'component': self.component,
+            'package': self.component or 'unknown',  # Map package to component for frontend
+            'affected': self.component or 'unknown', # Map affected to component for frontend
             'status': self.status,
             'assignee_id': self.assignee_id,
             'assignee': self.assignee_id,
-            'detectedAt': self.detectedAt
+            'detectedAt': self.detectedAt,
+            'cvss': cvss,                            # Map cvss dynamically
+            'desc': f"{self.title or 'Vulnerability detected.'} CVE reference: {self.cve}.",
+            'remediation': f"Upgrade component {self.component or 'package'} to the latest secure version."
         }
 
 
