@@ -23,7 +23,11 @@ def create_task():
     priority = data.get('priority', 'p4')
     project_id = data.get('project_id')
     assignee_id = data.get('assignee_id')
-    tags = data.get('tags', '')
+    tags_data = data.get('tags', '')
+    if isinstance(tags_data, list):
+        tags = ','.join(tags_data)
+    else:
+        tags = str(tags_data or '')
     column_name = data.get('column_name', 'backlog')
     due = data.get('due')
 
@@ -85,7 +89,11 @@ def update_task(task_id):
     if 'project_id' in data:
         task.project_id = data['project_id'] if data['project_id'] else None
     if 'tags' in data:
-        task.tags = data['tags']
+        tags_data = data['tags']
+        if isinstance(tags_data, list):
+            task.tags = ','.join(tags_data)
+        else:
+            task.tags = str(tags_data or '')
     if 'due' in data:
         task.due = data['due']
 

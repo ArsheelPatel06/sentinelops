@@ -1588,7 +1588,10 @@ function renderKanbanCard(t, col) {
     </div>
     <div class="kanban-card-title">${escHtml(t.title)}</div>
     ${proj?`<div class="text-xs text-muted" style="margin-bottom:6px">📁 ${escHtml(proj.name)}</div>`:''}
-    ${t.tags.length?`<div class="kanban-card-tags">${t.tags.map(tag=>`<span class="badge badge-neutral" style="font-size:0.625rem">${escHtml(tag)}</span>`).join('')}</div>`:''}
+    ${(() => {
+      const tagsList = typeof t.tags === 'string' ? t.tags.split(',').map(s=>s.trim()).filter(Boolean) : (Array.isArray(t.tags) ? t.tags : []);
+      return tagsList.length ? `<div class="kanban-card-tags">${tagsList.map(tag=>`<span class="badge badge-neutral" style="font-size:0.625rem">${escHtml(tag)}</span>`).join('')}</div>` : '';
+    })()}
     <div class="kanban-card-footer">
       ${assignee?`<div style="display:flex;align-items:center;gap:5px"><div class="assignee-avatar" style="background:${avatarBg(assignee.avatar)};width:22px;height:22px;font-size:0.5625rem">${assignee.initials}</div><span class="text-xs text-muted">${assignee.name.split(' ')[0]}</span></div>`:`<span class="text-xs text-muted">Unassigned</span>`}
       ${t.due?`<span class="due-date ${isOverdue?'overdue':''}">${isOverdue?'⚠️ ':''} ${fmtDate(t.due)}</span>`:''} 
@@ -1625,7 +1628,10 @@ function taskFormHTML(t={}) {
     <div class="form-group"><label class="form-label">Assignee</label><select class="form-select" id="tf-assignee">${memberOpts}</select></div>
     <div class="form-group"><label class="form-label">Project</label><select class="form-select" id="tf-project">${projOpts}</select></div>
   </div>
-  <div class="form-group"><label class="form-label">Tags <span class="form-hint">(comma-separated)</span></label><input class="form-input" id="tf-tags" placeholder="backend, security" value="${escHtml((t.tags||[]).join(', '))}"></div>`;
+  <div class="form-group"><label class="form-label">Tags <span class="form-hint">(comma-separated)</span></label><input class="form-input" id="tf-tags" placeholder="backend, security" value="${(() => {
+    const tagsList = typeof t.tags === 'string' ? t.tags.split(',').map(s=>s.trim()).filter(Boolean) : (Array.isArray(t.tags) ? t.tags : []);
+    return escHtml(tagsList.join(', '));
+  })()}"></div>`;
 }
 
 function openAddTaskModal(col='backlog') {

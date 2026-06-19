@@ -270,6 +270,12 @@ class Task(db.Model):
     createdAt = db.Column(db.BigInteger)
 
     def to_dict(self):
+        tags_list = []
+        if self.tags:
+            if isinstance(self.tags, list):
+                tags_list = self.tags
+            elif isinstance(self.tags, str):
+                tags_list = [t.strip() for t in self.tags.split(',') if t.strip()]
         return {
             'id': self.id,
             'title': self.title,
@@ -277,7 +283,7 @@ class Task(db.Model):
             'priority': self.priority,
             'project_id': self.project_id,
             'assignee_id': self.assignee_id,
-            'tags': self.tags,
+            'tags': tags_list,
             'column_name': self.column_name,
             'due': self.due,
             'createdAt': self.createdAt
