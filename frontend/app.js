@@ -1865,7 +1865,7 @@ function openInviteModal() {
 }
 
 function openEditMemberModal(id) {
-  const m=AppState.team.find(x=>x.id===id); if(!m) return;
+  const m=AppState.team.find(x=>x.id==id); if(!m) return;
   showModal({ title:'Edit Member', subtitle:`Editing ${m.name}`, body:memberFormHTML(m), saveLabel:'Save Changes',
     onSave() {
       const name=document.getElementById('mf-name').value.trim();
